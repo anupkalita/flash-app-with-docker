@@ -1,0 +1,41 @@
+version: "3"
+services:
+  app1:
+    build: ./interns-starter-flask-app
+    volumes:
+      - ./interns-starter-flask-app:/interns-starter-flask-app	
+    links:
+      - db
+    ports:
+      - "5001:5001"
+    env_file:
+      - ./.env
+
+  app2:
+    build: ./interns-starter-flask-app
+    volumes:
+      - ./interns-starter-flask-app:/interns-starter-flask-app	
+    links:
+      - db
+    ports:
+      - "5002:5001"
+    env_file:
+      - ./.env
+  
+  nginx:
+    build: ./nginx
+    ports:
+      - "8080:80"
+    depends_on:
+      - app1
+      - app2
+
+  db:
+    image: mysql:8.0.21
+    command: --default-authentication-plugin=caching_sha2_password
+    ports:
+      - "30000:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d/:ro

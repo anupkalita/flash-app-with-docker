@@ -1,0 +1,11 @@
+# Python dependencies
+
+# Install Instructions:
+# pip3 install -r requirements.txt
+cryptography
+flask==1.1.4
+markupsafe==2.0.1
+Flask-MySQL==1.5.1
+PyMySQL==0.10.0
+Jinja2
+
